@@ -23,5 +23,11 @@ df = df.drop(columns=['10ClassKind', '11ClassKind'])
 df.set_index("icd10Code", inplace=True)
 icd11_code_series = df['icd11Code']
 data_map_dict = icd11_code_series.to_dict()
+
+input_map_supl_file = os.path.join('data', 'input', '10To11MapSupl.json')
+with open(input_map_supl_file) as supl_json_file:
+    supl_data = json.load(supl_json_file)
+    data_map_dict.update(supl_data)
+
 with open(output_map_file, 'w') as fp:
     json.dump(data_map_dict, fp)
